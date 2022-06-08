@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.eternitywall</groupId>
+    <groupId>com.github.c4talys7</groupId>
     <artifactId>java-opentimestamps</artifactId>
-    <version>1.20</version>
+    <version>1.20.01-bisq</version>
 
     <name>java-opentimestamps</name>
     <description>The java implementation of the OpenTimestamps protocol</description>
@@ -32,11 +32,10 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/eternitywall/java-opentimestamps.git</connection>
-        <developerConnection>scm:git:ssh://github.com/eternitywall/java-opentimestamps.git</developerConnection>
-        <url>http://github.com/eternitywall/java-opentimestamps/tree/master</url>
+        <connection>scm:git:git://github.com/c4talys7/java-opentimestamps.git</connection>
+        <developerConnection>scm:git:ssh://github.com/c4talys7/java-opentimestamps.git</developerConnection>
+        <url>http://github.com/c4talys7/java-opentimestamps/tree/master</url>
     </scm>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -88,8 +87,6 @@
             <version>2.3.2</version>
             <scope>runtime</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -103,35 +100,24 @@
                     <target>${java.specification.version}</target>
                 </configuration>
             </plugin>
+            
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                    </execution>
-                    <execution>
-                        <phase>package</phase>
-                        <id>cli</id>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>OtsCli</finalName>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <archive>
-                                <manifest>
-                                    <mainClass>com.eternitywall.ots.OtsCli</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<!-- DO NOT include log4j.properties file in your Jar -->
+					<excludes>
+						<exclude>**/log4j.properties</exclude>
+					</excludes>
+					<archive>
+						<manifest>
+						<!-- Jar file entry point -->
+							<mainClass>com.eternitywall.ots.OtsCli</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+            
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
